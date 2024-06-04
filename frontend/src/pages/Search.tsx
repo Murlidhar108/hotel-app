@@ -4,11 +4,11 @@ import { useSearchContext } from "../contexts/SearchContext";
 import * as apiClient from "../api-client";
 import { useState } from "react";
 import SearchResultsCard from "../components/SearchResultsCard";
-// import Pagination from "../components/Pagination";
-// import StarRatingFilter from "../components/StarRatingFilter";
-// import HotelTypesFilter from "../components/HotelTypesFilter";
-// import FacilitiesFilter from "../components/FacilitiesFilter";
-// import PriceFilter from "../components/PriceFilter";
+import Pagination from "../components/Pagination";
+import StarRatingFilter from "../components/StarRatingFilter";
+import HotelTypesFilter from "../components/HotelTypesFilter";
+import FacilitiesFilter from "../components/FacilitiesFilter";
+import PriceFilter from "../components/PriceFilter";
 
 const Search = () => {
   const search = useSearchContext();
@@ -76,7 +76,7 @@ const Search = () => {
           <h3 className="text-lg font-semibold border-b border-slate-300 pb-5">
             Filter by:
           </h3>
-          {/* <StarRatingFilter
+          <StarRatingFilter
             selectedStars={selectedStars}
             onChange={handleStarsChange}
           />
@@ -91,15 +91,15 @@ const Search = () => {
           <PriceFilter
             selectedPrice={selectedPrice}
             onChange={(value?: number) => setSelectedPrice(value)}
-          /> */}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center">
           <span className="text-xl font-bold">
-            {hotelData?.pagination.total} Hotels found
-            {search.destination ? ` in ${search.destination}` : ""}
-          </span>
+          {Number(hotelData?.pagination.total) || 0} Hotels found
+          {search.destination ? ` in ${search.destination}` : ""}
+        </span>
           <select
             value={sortOption}
             onChange={(event) => setSortOption(event.target.value)}
@@ -118,13 +118,13 @@ const Search = () => {
         {hotelData?.data.map((hotel, index) => (
           <SearchResultsCard key={index} hotel={hotel} />
         ))}
-        {/* <div>
+        <div>
           <Pagination
-            page={hotelData?.pagination.page || 1}
-            pages={hotelData?.pagination.pages || 1}
-            onPageChange={(page) => setPage(page)}
+             page={Number(hotelData?.pagination.page) || 1}
+             pages={Number(hotelData?.pagination.pages) || 1}
+             onPageChange={(page) => setPage(page)}
           />
-        </div> */}
+        </div>
       </div>
     </div>
   );
